@@ -123,7 +123,6 @@ public class Ball : MonoBehaviour
             else
             {
                 source1.PlayOneShot(hitBall1);
-
             }
             Debug.Log(angle);
 
