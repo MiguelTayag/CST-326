@@ -14,6 +14,10 @@ public class LevelParserStarter : MonoBehaviour
     public GameObject questionBoxPrefab;
     [FormerlySerializedAs("Stone")]
     public GameObject stonePrefab;
+    [FormerlySerializedAs("Water")]
+    public GameObject waterPrefab;
+    [FormerlySerializedAs("Finish")]
+    public GameObject finishPrefab;
     public Transform environmentRoot;
 
     // --------------------------------------------------------------------------
@@ -64,8 +68,12 @@ public class LevelParserStarter : MonoBehaviour
                 // Todo - Instantiate a new GameObject that matches the type specified by letter
                     var rockObject = Instantiate(rockPrefab);
                     var stoneObject = Instantiate(stonePrefab);
-                    var QuestionBoxObject = Instantiate(questionBoxPrefab);
-                    var BrickObject = Instantiate(brickPrefab);
+                    var questionBoxObject = Instantiate(questionBoxPrefab);
+                    var brickObject = Instantiate(brickPrefab);
+                    var waterObject = Instantiate(waterPrefab);
+                    var finishObject = Instantiate(finishPrefab);
+
+
 
                 if (letter == 'x'){
                     rockObject.transform.position = new Vector3(column + 0.5f, row + 0.5f, -0.5f);
@@ -74,10 +82,16 @@ public class LevelParserStarter : MonoBehaviour
                     stoneObject.transform.position = new Vector3(column + 0.5f, row + 0.5f, -0.5f);
                 }
                 if (letter == 'b'){
-                    BrickObject.transform.position = new Vector3(column + 0.5f, row + 0.5f, -0.5f);
+                    brickObject.transform.position = new Vector3(column + 0.5f, row + 0.5f, -0.5f);
                 }
                 if (letter == '?'){
-                    QuestionBoxObject.transform.position = new Vector3(column + 0.5f, row + 0.5f, -0.5f);
+                    questionBoxObject.transform.position = new Vector3(column + 0.5f, row + 0.5f, -0.5f);
+                }
+                if (letter == 'w'){
+                    waterObject.transform.position = new Vector3(column + 0.5f, row + 0.5f, -0.5f);
+                }
+                if (letter == 'g'){
+                    finishObject.transform.position = new Vector3(column + 0.5f, row + 0.5f, -0.5f);
                 }
                 // Todo - Position the new GameObject at the appropriate location by using row and column
                 // Todo - Parent the new GameObject under levelRoot

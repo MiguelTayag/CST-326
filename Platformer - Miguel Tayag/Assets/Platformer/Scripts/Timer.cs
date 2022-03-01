@@ -27,12 +27,14 @@ public class Timer : MonoBehaviour
             // Debug.Log("Time is : " + totalTime);
         }
 
-        theTime = (375 - totalTime);
+        theTime = (100 - totalTime);
         theText.text = "Time \n" + theTime;
         //reset the time for now.
         if (theTime == 0)
         {
-            theTime = 375f;
+            theTime = 100;
+            totalTime = 0;
+            Debug.Log("Game Over");
         }
 
     }
