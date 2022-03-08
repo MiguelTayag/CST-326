@@ -48,18 +48,28 @@ public class Bullet : MonoBehaviour
         if (collision.gameObject.name.Equals("Monster"))
         {
             scoreScript.theScore += 40;
+            hiScoreScript.theScore += 40;
+
         }
         if (collision.gameObject.name.Equals("UFO"))
         {
             scoreScript.theScore += 30;
+            hiScoreScript.theScore += 30;
+
         }
         if (collision.gameObject.name.Equals("BlueMonster"))
         {
             scoreScript.theScore += 20;
+            hiScoreScript.theScore += 20;
+
+
         }
         if (collision.gameObject.name.Equals("PurpMonster"))
         {
             scoreScript.theScore += 10;
+            hiScoreScript.theScore += 10;
+
+
         }
         if (collision.gameObject.name.Equals("LeftBarricade"))
         {
