@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using Unity.VisualScripting;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 
 public class Player : MonoBehaviour
@@ -9,6 +11,7 @@ public class Player : MonoBehaviour
     private Animator playerAnimator;
     private static readonly int Shoot = Animator.StringToHash("Shoot");
 
+    public bool loadScene = false;
     //-----------------------------------------------------------------------------
     void Start()
     {
@@ -18,32 +21,26 @@ public class Player : MonoBehaviour
     //-----------------------------------------------------------------------------
     void Update()
     {
+
         if (Input.GetKeyDown(KeyCode.Space))
         {
             // todo - trigger a "shoot" on the animator
             playerAnimator.SetTrigger(Shoot);
             GameObject shot = Instantiate(bulletPrefab, shootOffsetTransform.position, Quaternion.identity);
-            Debug.Log("Bang!");
-
-            
             Destroy(shot, 3f);
         }
-        
+
         if (gameObject.CompareTag("Player"))
         {
             float movementAxis = Input.GetAxis("Horizontal");
-
-            // Vector3 force = Vector3.right * movementAxis * movementPerSecond * Time.deltaTime;
-            // Rigidbody rBody = GetComponent<Rigidbody>();
-            // if (rBody != null)
-            // {
-            //     rBody.AddForce(force, ForceMode.VelocityChange);
-            // }
-            
             transform.position += Vector3.right * movementAxis * movementPerSecond * Time.deltaTime;
-            
-            // Debug.Log(transform.position.x);
-           
+        }
+        if (playerAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime > 2 
+            && !playerAnimator.IsInTransition(0) && 
+            ( playerAnimator.GetCurrentAnimatorStateInfo(0).IsName("Player Die")))
+        {
+            SceneManager.LoadScene("Credits");
         }
     }
 }
+

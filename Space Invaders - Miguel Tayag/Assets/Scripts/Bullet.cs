@@ -17,9 +17,17 @@ public class Bullet : MonoBehaviour
     private int leftBarricadeHealthBar;
     private GameObject rightBarricade;
     private int rightBarricadeHealthBar;
-    
-
+    private Animator ufoAnimator;
+    private GameObject ufo;
+    private Animator blueAnimator;
+    private GameObject purp;
+    private Animator purpAnimator;
+    private GameObject blue;
+    private Animator monsterAnimator;
+    private GameObject monster;
     private int hiscore;
+    private static readonly int Die = Animator.StringToHash("Die");
+
     //-----------------------------------------------------------------------------
     void Start()
     {
@@ -32,7 +40,16 @@ public class Bullet : MonoBehaviour
         rightBarricadeHealthBar = 4;
         leftBarricade = GameObject.Find("LeftBarricade");
         leftBarricadeHealthBar = 4;
-        
+        ufo = GameObject.Find("UFO");
+        blue = GameObject.Find("BlueMonster");
+        purp = GameObject.Find("PurpMonster");
+        monster = GameObject.Find("Monster");
+
+        ufoAnimator = ufo.GetComponent<Animator>();
+        purpAnimator = purp.GetComponent<Animator>();
+        blueAnimator = blue.GetComponent<Animator>();
+        monsterAnimator = monster.GetComponent<Animator>();
+
 
     }
 
@@ -49,18 +66,22 @@ public class Bullet : MonoBehaviour
         {
             scoreScript.theScore += 40;
             hiScoreScript.theScore += 40;
-
+            monsterAnimator.SetTrigger(Die);
         }
         if (collision.gameObject.name.Equals("UFO"))
         {
             scoreScript.theScore += 30;
             hiScoreScript.theScore += 30;
+            ufoAnimator.SetTrigger(Die);
+
 
         }
         if (collision.gameObject.name.Equals("BlueMonster"))
         {
             scoreScript.theScore += 20;
             hiScoreScript.theScore += 20;
+            blueAnimator.SetTrigger(Die);
+
 
 
         }
@@ -68,7 +89,7 @@ public class Bullet : MonoBehaviour
         {
             scoreScript.theScore += 10;
             hiScoreScript.theScore += 10;
-
+            purpAnimator.SetTrigger(Die);
 
         }
         if (collision.gameObject.name.Equals("LeftBarricade"))

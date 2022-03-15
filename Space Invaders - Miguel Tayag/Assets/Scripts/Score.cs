@@ -22,7 +22,6 @@ public class Score : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("The score is " + theScore + " called by: " + gameObject);
         if (theScore > theHiScore)
         {
             theHiScore = theScore;
