@@ -12,7 +12,7 @@ public class CoinTracker : MonoBehaviour
     void Start()
     {
         coinsText = gameObject.GetComponent<TextMeshProUGUI>();
-        coins = 0;
+        coins = 5;
     }
 
     // Update is called once per frame

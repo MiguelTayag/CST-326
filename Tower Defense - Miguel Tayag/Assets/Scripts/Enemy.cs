@@ -7,7 +7,10 @@ using UnityEngine.UI;
 public class Enemy : MonoBehaviour
 {
     // todo #1 set up properties
-    public int health = 3;
+    public float health = 3;
+    public float maxHealth = 3;
+    public GameObject healthBarUI;
+    public Slider slider;
 
     public float speed = 3f;
 
@@ -30,6 +33,8 @@ public class Enemy : MonoBehaviour
     //-----------------------------------------------------------------------------
     void Start()
     {
+        health = maxHealth;
+        slider.value = CalculateHealth();
         coinsText = GameObject.Find("Coins Text").GetComponent<TextMeshProUGUI>();
         coinTScript = coinsText.GetComponent<CoinTracker>();
         // todo #2
@@ -42,19 +47,28 @@ public class Enemy : MonoBehaviour
     //-----------------------------------------------------------------------------
     void Update()
     {
+        slider.value = CalculateHealth();
+        
+        if (health < maxHealth)
+        {
+            healthBarUI.SetActive(true);
+        }
         if( Input.GetMouseButtonDown(0) )
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
  
             RaycastHit hit;
-            if( Physics.Raycast(ray, out hit, 100.0f) && hit.transform.gameObject != null )
+            if( Physics.Raycast(ray, out hit, 100.0f) && hit.transform.gameObject != null)
             {
-                health--;
-                Debug.Log("The health is " + health);
-                if (health == 0)
+                if (hit.transform.gameObject.name.Equals("monster"))
                 {
-                    Destroy(hit.transform.gameObject);
-                    coinTScript.coins++;
+                    health--;
+                    Debug.Log("Health: " + health + "\n" + "maxHealth: " + maxHealth);
+                    if (health == 0)
+                    {
+                        Destroy(hit.transform.gameObject);
+                        coinTScript.coins++;
+                    }
                 }
             }
         }
@@ -88,5 +102,10 @@ public class Enemy : MonoBehaviour
         }
         targetWaypointIndex++;
 
+    }
+
+    float CalculateHealth()
+    {
+        return (health / maxHealth);
     }
 }
