@@ -7,6 +7,8 @@ public class BuildingPlacer : MonoBehaviour
 {
     private TextMeshProUGUI coinsText;
     private CoinTracker coinTScript;
+
+    public GameObject towerPrefab;
     // Start is called before the first frame update
     void Start()
     {
@@ -26,7 +28,7 @@ public class BuildingPlacer : MonoBehaviour
                 if (!hit.transform.gameObject.name.Equals("monster") && coinTScript.coins > 0)
                 {
                     var location = new Vector3(hit.point.x, (float) (hit.point.y + 3.4), hit.point.z);
-                    Instantiate(GameObject.Find("SiegeTower"),
+                    Instantiate(towerPrefab,
                         location,
                         GameObject.Find("SiegeTower").transform.rotation);
                     coinTScript.coins--;

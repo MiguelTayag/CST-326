@@ -3,6 +3,8 @@ using System.ComponentModel.Design;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+
 
 public class Enemy : MonoBehaviour
 {
@@ -47,6 +49,7 @@ public class Enemy : MonoBehaviour
     //-----------------------------------------------------------------------------
     void Update()
     {
+
         slider.value = CalculateHealth();
         
         if (health < maxHealth)
@@ -58,12 +61,11 @@ public class Enemy : MonoBehaviour
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
  
             RaycastHit hit;
-            if( Physics.Raycast(ray, out hit, 100.0f) && hit.transform.gameObject != null)
+            if( Physics.Raycast(ray, out hit, Mathf.Infinity) && hit.transform.gameObject != null)
             {
                 if (hit.transform.gameObject.name.Equals("monster"))
                 {
                     health--;
-                    Debug.Log("Health: " + health + "\n" + "maxHealth: " + maxHealth);
                     if (health == 0)
                     {
                         Destroy(hit.transform.gameObject);
@@ -74,6 +76,7 @@ public class Enemy : MonoBehaviour
         }
         // todo #3 Move towards the next waypoint
         Vector3 targetPosition = waypointList[targetWaypointIndex].position;
+        targetPosition.y = 10;
         Vector3 movementDir = (targetPosition - transform.position).normalized;
         // todo #4 Check if destination reaches or passed and change target
         if (Vector3.Distance(transform.position, targetPosition) < 0.1 && targetWaypointIndex != waypointList.Count - 1)
@@ -91,6 +94,16 @@ public class Enemy : MonoBehaviour
         {
             OnEnemyDied?.Invoke(this);
         }
+
+        if (transform.position.x == waypointList[8].position.x && transform.position.z == waypointList[8].position.z)
+        {
+            Destroy(transform.gameObject);
+            coinTScript.health--;
+            if (coinTScript.health <= 0)
+            {
+                SceneManager.LoadScene("Done");
+            }
+        }
     }
 
     //-----------------------------------------------------------------------------
@@ -107,5 +120,15 @@ public class Enemy : MonoBehaviour
     float CalculateHealth()
     {
         return (health / maxHealth);
+    }
+
+    public void TakeDamage(float damage)
+    {
+        health -= damage;
+        if (health <= 0f)
+        {
+            Destroy(gameObject);
+            coinTScript.coins++;
+        }
     }
 }
